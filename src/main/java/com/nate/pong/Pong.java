@@ -8,22 +8,19 @@ import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
 
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 
 import com.nate.pong.state.GameState;
-import com.nate.pong.state.menu.MainMenu;
 
 public class Pong extends Canvas implements Runnable, KeyListener {
 
     private static JFrame frame;
-    private static Random random;
-    private static final int SCREEN_WIDTH = 640;
-    private static final int SCREEN_HEIGHT = 480;
+    public static Random RANDOM;
+    public static final int SCREEN_WIDTH = 720;
+    public static final int SCREEN_HEIGHT = 440;
     private static final String TITLE = "Pong";
     private static final double TARGET_FPS = 60.0;
     private static final double TIME_BETWEEN_FRAMES = 1000000000 / TARGET_FPS;
@@ -32,17 +29,14 @@ public class Pong extends Canvas implements Runnable, KeyListener {
     private BufferedImage display;
     private boolean keys[];
 
-    private List<GameState> gameStates;
-    private MainMenu mainMenu;
+    private GameState currentState;
 
     private void init() {
         display = new BufferedImage(SCREEN_WIDTH, SCREEN_HEIGHT, BufferedImage.TYPE_INT_RGB);
-        random = new Random();
+        RANDOM = new Random();
         keys = new boolean[256];
-        gameStates = new ArrayList<>();
 
-        mainMenu = new MainMenu();
-        gameStates.add(mainMenu);
+        currentState = new PongGame();
 
         addKeyListener(this);
     }
@@ -64,7 +58,7 @@ public class Pong extends Canvas implements Runnable, KeyListener {
     }
 
     private void tick() {
-        
+        currentState.tick(this);
     }
 
     private void render() {
@@ -72,7 +66,7 @@ public class Pong extends Canvas implements Runnable, KeyListener {
         g.setColor(Color.BLACK);
         g.fillRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
 
-        for (GameState state : gameStates) { state.render(g); }
+        currentState.render(g);
 
         getGraphics().drawImage(display, 0, 0, this);
     }
@@ -103,6 +97,9 @@ public class Pong extends Canvas implements Runnable, KeyListener {
             pong.start();
         });
     }
+
+    public void setState(GameState state) { currentState = state; }
+    public boolean getKey(int key) { return keys[key]; }
 
     @Override public void keyTyped(KeyEvent e) {}
     @Override public void keyPressed(KeyEvent e) { keys[e.getKeyCode()] = true; }
