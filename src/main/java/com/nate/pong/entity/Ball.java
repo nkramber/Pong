@@ -9,7 +9,7 @@ public class Ball extends Entity {
     private static final int WIDTH = 10;
     private static final int HEIGHT = 10;
     private static final float INITIAL_SPEED = 2.5f;
-    private static final float MAX_SPEED = Player.SPEED - 0.1f;
+    private static final float MAX_SPEED = 10.0f;
 
     private float speed = INITIAL_SPEED;
     private int xDir, yDir;
@@ -21,6 +21,7 @@ public class Ball extends Entity {
     }
 
     public void tick() {
+        System.out.println(speed + ", " + MAX_SPEED);
         setX(getX() + getxDir() * speed);
         setY(getY() + getyDir() * speed);
         updateCollisionBox();

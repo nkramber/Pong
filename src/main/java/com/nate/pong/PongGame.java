@@ -15,15 +15,17 @@ import com.nate.pong.state.GameState;
 
 public class PongGame extends GameState {
 
-    private final float ballSpeedRatio = 1.1f;
+    private static final int PLAYER_SIDE_BUFFER = 30;
+    private static final float BALL_SPEED_RATIO = 1.1f;
+
     private Player[] players;
     private Ball ball;
 
     public PongGame() {
         ball = new Ball(getBallSpawn());
         players = new Player[2];
-        players[0] = new Player(Player.WIDTH * 3, Pong.SCREEN_HEIGHT / 2, KeyEvent.VK_W, KeyEvent.VK_S);
-        players[1] = new Player(Pong.SCREEN_WIDTH - Player.WIDTH * 4, Pong.SCREEN_HEIGHT / 2, KeyEvent.VK_UP, KeyEvent.VK_DOWN);
+        players[0] = new Player(PLAYER_SIDE_BUFFER, Pong.SCREEN_HEIGHT / 2, KeyEvent.VK_W, KeyEvent.VK_S);
+        players[1] = new Player(Pong.SCREEN_WIDTH - Player.WIDTH - PLAYER_SIDE_BUFFER, Pong.SCREEN_HEIGHT / 2, KeyEvent.VK_UP, KeyEvent.VK_DOWN);
     }
 
     @Override
@@ -105,10 +107,10 @@ public class PongGame extends GameState {
             }
         } else if (direction == "left") {
             ball.setxDir(-1);
-            ball.increaseSpeed(ballSpeedRatio);
+            ball.increaseSpeed(BALL_SPEED_RATIO);
         } else if (direction == "right") {
             ball.setxDir(1);
-            ball.increaseSpeed(ballSpeedRatio);
+            ball.increaseSpeed(BALL_SPEED_RATIO);
         }
     }
 
