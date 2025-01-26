@@ -99,7 +99,7 @@ public class Pong extends Canvas implements Runnable, KeyListener {
     }
 
     public void setState(GameState state) { currentState = state; }
-    public boolean getKey(int key) { return keys[key]; }
+    public boolean[] getKeys() { return keys; }
 
     @Override public void keyTyped(KeyEvent e) {}
     @Override public void keyPressed(KeyEvent e) { keys[e.getKeyCode()] = true; }
