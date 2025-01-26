@@ -14,13 +14,14 @@ import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 
 import com.nate.pong.state.GameState;
+import com.nate.pong.state.menu.MainMenu;
 
 public class Pong extends Canvas implements Runnable, KeyListener {
 
     private static JFrame frame;
     public static Random RANDOM;
-    public static final int SCREEN_WIDTH = 720;
-    public static final int SCREEN_HEIGHT = 440;
+    public static final int SCREEN_WIDTH = 800;
+    public static final int SCREEN_HEIGHT = 500;
     private static final String TITLE = "Pong";
     private static final double TARGET_FPS = 60.0;
     private static final double TIME_BETWEEN_FRAMES = 1000000000 / TARGET_FPS;
@@ -36,7 +37,7 @@ public class Pong extends Canvas implements Runnable, KeyListener {
         RANDOM = new Random();
         keys = new boolean[256];
 
-        currentState = new PongGame();
+        currentState = new MainMenu();
 
         addKeyListener(this);
     }
